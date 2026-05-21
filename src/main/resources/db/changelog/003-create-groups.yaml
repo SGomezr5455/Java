@@ -1,0 +1,43 @@
+databaseChangeLog:
+  - changeSet:
+      id: 003-create-groups
+      author: ystu-dev
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: groups
+      changes:
+        - createTable:
+            tableName: groups
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: VARCHAR(30)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: course_year
+                  type: INT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: faculty_id
+                  type: BIGINT
+                  constraints:
+                    foreignKeyName: fk_group_faculty
+                    references: faculties(id)
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP

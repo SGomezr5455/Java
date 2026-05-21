@@ -1,0 +1,78 @@
+databaseChangeLog:
+  - changeSet:
+      id: 008-create-lessons
+      author: ystu-dev
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: lessons
+      changes:
+        - createTable:
+            tableName: lessons
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: subject_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_lesson_subject
+                    references: subjects(id)
+              - column:
+                  name: teacher_id
+                  type: BIGINT
+                  constraints:
+                    foreignKeyName: fk_lesson_teacher
+                    references: teachers(id)
+              - column:
+                  name: room_id
+                  type: BIGINT
+                  constraints:
+                    foreignKeyName: fk_lesson_room
+                    references: rooms(id)
+              - column:
+                  name: lesson_type
+                  type: VARCHAR(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: start_time
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: end_time
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: pair_number
+                  type: INT
+              - column:
+                  name: week_number
+                  type: INT
+              - column:
+                  name: subgroup
+                  type: VARCHAR(20)
+              - column:
+                  name: is_distant
+                  type: BOOLEAN
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
+              - column:
+                  name: comment
+                  type: VARCHAR(255)
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP

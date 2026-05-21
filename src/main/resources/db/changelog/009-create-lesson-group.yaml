@@ -1,0 +1,31 @@
+databaseChangeLog:
+  - changeSet:
+      id: 009-create-lesson-group
+      author: ystu-dev
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: lesson_group
+      changes:
+        - createTable:
+            tableName: lesson_group
+            columns:
+              - column:
+                  name: lesson_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_lg_lesson
+                    references: lessons(id)
+              - column:
+                  name: group_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_lg_group
+                    references: groups(id)
+        - addPrimaryKey:
+            tableName: lesson_group
+            columnNames: lesson_id, group_id
+            constraintName: pk_lesson_group

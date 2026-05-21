@@ -1,0 +1,31 @@
+databaseChangeLog:
+  - changeSet:
+      id: 007-create-teacher-subject
+      author: ystu-dev
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: teacher_subject
+      changes:
+        - createTable:
+            tableName: teacher_subject
+            columns:
+              - column:
+                  name: teacher_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_ts_teacher
+                    references: teachers(id)
+              - column:
+                  name: subject_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_ts_subject
+                    references: subjects(id)
+        - addPrimaryKey:
+            tableName: teacher_subject
+            columnNames: teacher_id, subject_id
+            constraintName: pk_teacher_subject

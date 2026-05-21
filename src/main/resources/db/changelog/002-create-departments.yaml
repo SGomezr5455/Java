@@ -1,0 +1,42 @@
+databaseChangeLog:
+  - changeSet:
+      id: 002-create-departments
+      author: ystu-dev
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: departments
+      changes:
+        - createTable:
+            tableName: departments
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: VARCHAR(150)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: short_name
+                  type: VARCHAR(20)
+              - column:
+                  name: faculty_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_department_faculty
+                    references: faculties(id)
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP

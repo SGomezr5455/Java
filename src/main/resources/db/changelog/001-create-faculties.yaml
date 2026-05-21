@@ -1,0 +1,35 @@
+databaseChangeLog:
+  - changeSet:
+      id: 001-create-faculties
+      author: ystu-dev
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: faculties
+      changes:
+        - createTable:
+            tableName: faculties
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: VARCHAR(150)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: short_name
+                  type: VARCHAR(20)
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP

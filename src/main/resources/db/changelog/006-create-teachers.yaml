@@ -1,0 +1,53 @@
+databaseChangeLog:
+  - changeSet:
+      id: 006-create-teachers
+      author: ystu-dev
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: teachers
+      changes:
+        - createTable:
+            tableName: teachers
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: first_name
+                  type: VARCHAR(60)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_name
+                  type: VARCHAR(60)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: middle_name
+                  type: VARCHAR(60)
+              - column:
+                  name: email
+                  type: VARCHAR(120)
+                  constraints:
+                    unique: true
+              - column:
+                  name: academic_title
+                  type: VARCHAR(60)
+              - column:
+                  name: department_id
+                  type: BIGINT
+                  constraints:
+                    foreignKeyName: fk_teacher_department
+                    references: departments(id)
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP
